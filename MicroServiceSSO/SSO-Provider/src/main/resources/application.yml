@@ -1,0 +1,16 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: provider
+  datasource:
+    url: jdbc:mysql://localhost:3306/Jaslyn?serverTimezone=UTC
+    username: root
+    password: zhangtao330226
+    driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+mybatis:
+  mapper-locations: classpath:mapper/*
