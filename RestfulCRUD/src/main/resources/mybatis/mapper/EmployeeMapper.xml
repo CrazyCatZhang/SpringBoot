@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.catzhang.restfulcrud.mapper.EmployeeMapper">
+    <select id="find" resultMap="DeptInEmpMap">
+        select * from employee,department
+        where employee.department = department.departmentId
+    </select>
+    <select id="getEmployeeByID" resultMap="DeptInEmpMap" parameterType="Integer">
+        select * from employee,department
+        where employee.employeeId = #{id} and department.departmentId = employee.department
+    </select>
+    <resultMap id="DeptInEmpMap" type="com.catzhang.restfulcrud.pojo.Employee" autoMapping="true">
+        <id property="employeeId" column="employeeId"/>
+        <result property="lastName" column="lastName"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="birth" column="birth"/>
+        <association property="department" javaType="com.catzhang.restfulcrud.pojo.Department" autoMapping="true">
+            <id column="departmentId" property="departmentId"/>
+            <result column="departmentName" property="departmentName"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteEmployee" parameterType="Integer">
+        delete from employee
+        where employeeId=#{id}
+    </delete>
+
+    <insert id="insertEmployee" parameterType="com.catzhang.restfulcrud.pojo.Employee">
+        insert into employee(lastName,email,gender,birth,department)
+         values (#{lastName},#{email},#{gender},#{birth},#{department.departmentId})
+    </insert>
+
+    <update id="saveEmployee" parameterType="com.catzhang.restfulcrud.pojo.Employee">
+        update employee set
+        lastName=#{lastName},email=#{email},gender=#{gender},department=#{department.departmentId},birth=#{birth}
+        where employeeId=#{employeeId}
+    </update>
+
+</mapper>
