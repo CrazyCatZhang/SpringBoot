@@ -12,5 +12,7 @@ public interface UserMapper {
 
     public Integer checkUser(String username);
 
+    public User loginUser(String username,String password);
+
 }
 
