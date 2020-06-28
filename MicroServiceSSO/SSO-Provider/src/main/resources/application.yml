@@ -8,6 +8,9 @@ spring:
     username: root
     password: zhangtao330226
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 172.20.10.2
+    port: 6379
 eureka:
   client:
     service-url:
