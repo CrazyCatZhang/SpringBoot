@@ -9,27 +9,33 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisAPI {
 
-    private final RedisTemplate<String,String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     public RedisAPI(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-    public void set(String key,String value){
+    //1.设置值
+    public void set(String key , String value) {
         this.redisTemplate.opsForValue().set(key, value);
     }
 
-    public void set(String key,String value,Integer seconds){
-        this.redisTemplate.opsForValue().set(key,value);
-        this.redisTemplate.expire(key,seconds, TimeUnit.SECONDS);
+    //2.设置值，以及过期时间
+    public void set(String key,String value , Integer seconds ) {
+        //设置值
+        this.redisTemplate.opsForValue().set(key, value);
+        //设置过期时间
+        this.redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
     }
 
-    public void expire(String key,Integer seconds){
-        this.redisTemplate.expire(key,seconds,TimeUnit.SECONDS);
+    //3.针对 key 设置过期时间
+    public void expire(String key , Integer seconds) {
+        this.redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
     }
 
-    public String get(String key){
+    //4.获取数据
+    public String get(String key) {
         return this.redisTemplate.opsForValue().get(key).toString();
     }
 }
