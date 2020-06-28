@@ -3,26 +3,32 @@
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.catzhang.ssoprovider.mapper.UserMapper">
     <insert id="addUser">
-        insert into sso_user(
-            username,
-            password,
-            phone,
-            email,
-            created,
-            updated,
-        )values(
-            #{username},
-            #{password},
-            #{phone},
-            #{email},
-            NOW(),
-            NOW()
-        )
-    </insert>
+		insert into sso_user(
+		username,
+		password,
+		phone,
+		email,
+		created,
+		updated
+		)values(
+			#{username},
+			#{password},
+			#{phone},
+			#{email},
+			NOW(),
+			NOW()
+		);
+	</insert>
     <select id="checkUser" resultType="java.lang.Integer">
         select
-            count(*)
-        from sso_user
-        where username = #{username}
+			count(*)
+		from sso_user
+		where username = #{username}
+    </select>
+    <select id="loginUser" resultType="com.catzhang.ssoprovider.pojo.User">
+        select
+		*
+		from sso_user
+		where username = #{username} and password = #{password}
     </select>
 </mapper>
