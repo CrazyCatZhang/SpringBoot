@@ -3,10 +3,8 @@ package com.catzhang.ssoprovider.controller;
 import com.catzhang.ssoprovider.pojo.User;
 import com.catzhang.ssoprovider.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -19,37 +17,48 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/checkName/{un}",method = RequestMethod.GET)
-    public String checkName(@PathVariable(value = "un") String username){
+    @RequestMapping(value = "/checkName/{un}", method = RequestMethod.GET)
+    public String checkName(@PathVariable(value = "un") String username) {
         try {
             final Integer integer = this.userService.checkUser(username);
-            String info  = null;
-            if (integer == 1){
+            String info = null;
+            if (integer == 1) {
                 info = "User is existed...";
-            }else {
+            } else {
                 info = "User does not exist to register!!!";
             }
             return info;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "error";
         }
     }
 
-    @RequestMapping(value = "/addUser",method = RequestMethod.POST)
-    public String addUser(User user){
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String addUser(User user) {
         String info = null;
         try {
             final Boolean result = this.userService.addUser(user);
-            if (result == true){
+            if (result == true) {
                 info = "User registration successful!!!";
-            }else {
+            } else {
                 info = "User is existed...";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             info = "System exception";
         }
         return info;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginUser(@RequestParam("un") String username,
+                            @RequestParam("pwd") String password) {
+        String result = this.userService.loginUser(username, password);
+        if ("success".equals(result)) {
+            return "login——success";
+        } else {
+            return "login——error";
+        }
     }
 }
