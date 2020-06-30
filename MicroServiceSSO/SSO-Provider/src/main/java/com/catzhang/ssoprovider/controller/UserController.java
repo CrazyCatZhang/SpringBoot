@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/checkName/{un}", method = RequestMethod.GET)
+    @GetMapping(value = "/checkName/{un}")
     public String checkName(@PathVariable(value = "un") String username) {
         try {
             final Integer integer = this.userService.checkUser(username);
@@ -34,7 +34,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @PostMapping(value = "/addUser")
     public String addUser(User user) {
         String info = null;
         try {
@@ -51,7 +51,7 @@ public class UserController {
         return info;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public String loginUser(@RequestParam("un") String username,
                             @RequestParam("pwd") String password) {
         String result = this.userService.loginUser(username, password);
@@ -60,5 +60,10 @@ public class UserController {
         } else {
             return "login——error";
         }
+    }
+
+    @GetMapping(value = "/query/{key}")
+    public String queryUserInfo(@PathVariable("key") String key){
+        return this.userService.getUserInfo(key);
     }
 }
