@@ -9,4 +9,6 @@ public interface UserService {
     public Integer checkUser(String username);
 
     public String loginUser(String username,String password);
+
+    public String getUserInfo(String tickets);
 }
