@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService {
         return "success";
     }
 
+    @Override
+    public String getUserInfo(String tickets) {
+        return redisAPI.get(tickets);
+    }
+
 }
