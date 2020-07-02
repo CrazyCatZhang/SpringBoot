@@ -56,9 +56,9 @@ public class UserController {
                             @RequestParam("pwd") String password) {
         String result = this.userService.loginUser(username, password);
         if ("success".equals(result)) {
-            return "login——success";
+            return "login_success";
         } else {
-            return "login——error";
+            return "login_error";
         }
     }
 
