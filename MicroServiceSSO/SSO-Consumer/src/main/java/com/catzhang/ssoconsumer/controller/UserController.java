@@ -34,6 +34,6 @@ public class UserController {
 
     @GetMapping(value = "/query/{ticket}")
     public String queryTicket(@PathVariable("ticket") String ticket){
-        return this.providerFeignApi.getTicket(ticket);
+        return this.providerFeignApi.queryUserInfo(ticket);
     }
 }
