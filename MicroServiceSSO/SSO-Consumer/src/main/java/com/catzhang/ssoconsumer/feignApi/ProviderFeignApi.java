@@ -18,5 +18,6 @@ public interface ProviderFeignApi {
                             @RequestParam("pwd") String password);
 
     @GetMapping(value = "/user/query/{ticket}")
-    public String getTicket(@PathVariable(value = "ticket")String ticket);
+    public String queryUserInfo(@PathVariable(value = "ticket")String ticket);
+
 }
